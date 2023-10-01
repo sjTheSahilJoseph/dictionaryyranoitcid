@@ -3,7 +3,7 @@ import Loading from "../components/Loading";
 
 export default function Dictionary() {
   const [word, setWord] = useState("");
-  const [wordData, setWordData] = useState(null);
+  const [wordData, setWordData] = useState(undefined); // Initialize to undefined
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchDictionary = async (word) => {
@@ -14,7 +14,7 @@ export default function Dictionary() {
       setWordData(result[0]);
     } catch (error) {
       console.error("Error fetching word data:", error);
-      setWordData(null);
+      setWordData(null); // Set wordData to null when there's an error
     } finally {
       setIsLoading(false);
     }
@@ -76,7 +76,7 @@ export default function Dictionary() {
       </div>
 
       <div className="w-full sm:w-1/2 sm:pl-4 sm:max-w-sm">
-        {wordData && (
+        {wordData !== undefined ? ( // Check if wordData is not undefined
           <>
             {isLoading ? (
               <Loading />
@@ -123,7 +123,7 @@ export default function Dictionary() {
               </>
             )}
           </>
-        )}
+        ) : null /* Don't display anything when wordData is undefined */}
       </div>
     </div>
   );
